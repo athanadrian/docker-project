@@ -1,11 +1,13 @@
-FROM node:16.13.2
+FROM node:16-alpine3.17
 
-WORKDIR /var/www
+WORKDIR /usr/app
 
-COPY . .
+COPY package.json .
 
-EXPOSE 3000
+COPY package-lock.json .
 
 RUN npm install
 
-CMD ["npm", "start"]
+COPY . .
+
+# CMD ["npm", "start"]

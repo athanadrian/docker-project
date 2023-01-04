@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    command: npm start
+    volumes:
+      - ./frontend/src:/usr/app/src
+        # Mapping folder from my machine
+        # in order when we do a change in src directory
+        # we want this to reflect inside the src of the container
+        # the /app is the same with Dockerfile
+        # in linux systems everything goes inside a usr directory /usr/.......
+    ports:
+      - '3000:3000'
+    tty: true # comunicate with terminal
+    stdin_open: true # open in/out connection from the terminal
+    environment:
+      - REACT_APP_PORT=3001
+
+  api:
+    build:
+      context: ./backend
+    command: npm run dev
+    volumes:
+      - ./backend/src:/usr/app/src
+        # Mapping folder from my machine
+        # in order when we do a change in src directory
+        # we want this to reflect inside the src of the container
+        # the /app is the same with Dockerfile
+        # in linux systems everything goes inside a usr directory /usr/.......
+    ports:
+      - '3001:3001'
+    environment:
+      - PORT=3001

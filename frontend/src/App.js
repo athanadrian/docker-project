@@ -3,28 +3,23 @@ import './App.css';
 import axios from 'axios';
 
 function App() {
-  const [users, setUsers] = useState([]);
-
+  const [result, setResult] = useState('');
+  const PORT = process.env.REACT_APP_PORT || 3002;
   const getUsers = async () => {
-    const data = await axios.get('/users');
-    setUsers(data?.data);
+    const data = await axios.get(`http://localhost:${PORT}/test`);
+    setResult(data?.data);
   };
 
   useEffect(() => {
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log('users', users);
 
   return (
     <div className='App'>
-      <header className='App-header'>Docker App</header>
+      <header className='App-header'>My First Docker App</header>
       <section>
-        <h1>USERS</h1>
-        <ul>
-          {users.length > 0 &&
-            users.map(({ id, username }) => <li key={id}>{username}</li>)}
-        </ul>
+        <h1>{result}</h1>
       </section>
     </div>
   );
